@@ -22,6 +22,31 @@ resource "kubernetes_service_account" "iwo-user" {
 }
 
 
+resource "kubernetes_cluster_role" "iwo-cluster-role" {
+  metadata {
+    name = "iwo-cluster-admin"
+  }
+  
+  rule {
+    api_groups = ["", "apps", "extensions"]
+    resources  = ["nodes", "pods", "deployments", "replicasets", "replicationcontrollers"]
+    verbs      = ["*"]
+  }
+  
+  rule {
+    api_groups = ["", "apps", "extensions", "policy"]
+    resources  = ["services", "endpoints", "namespaces", "limitranges", "resourcequotas", "daemonsets", "persistentvolumes", "persistentvolumeclaims", "poddisruptionbudget"]
+    verbs      = ["get", "list", "watch"]
+  }
+  
+  rule {
+    api_groups = [""]
+    resources  = ["nodes/spec", "nodes/stats"]
+    verbs      = ["get"]
+  }
+}
+
+
 resource "kubernetes_cluster_role_binding" "iwo-all-binding" {
   depends_on = [kubernetes_service_account.iwo-user]
   metadata {
@@ -30,7 +55,7 @@ resource "kubernetes_cluster_role_binding" "iwo-all-binding" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = "cluster-admin"
+    name      = "iwo-cluster-admin"
   }
   subject {
     kind      = "ServiceAccount"
