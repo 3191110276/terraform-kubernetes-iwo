@@ -120,7 +120,7 @@ resource "kubernetes_deployment" "iwok8scollector" {
           }
         }
         container {
-          image = "intersight/pasadena:1.0.9-1"
+          image = "intersight/pasadena:${var.dc_version}"
           name  = "iwo-k8s-dc"
           image_pull_policy = "IfNotPresent"
           volume_mount {
