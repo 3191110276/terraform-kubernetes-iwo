@@ -52,7 +52,7 @@ resource "kubernetes_config_map" "iwo-config" {
       "communicationConfig": {
         "serverMeta": {
           "proxy": "http://localhost:9004",
-          "version": "8",
+          "version": ${var.iwo_server_version},
           "turboServer": "http://topology-processor:8080"
         }
       },
