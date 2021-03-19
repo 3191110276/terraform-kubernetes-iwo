@@ -26,7 +26,6 @@ resource "kubernetes_cluster_role_binding" "iwo-all-binding" {
   depends_on = [kubernetes_service_account.iwo-user]
   metadata {
     name = "iwo-all-binding"
-    #namespace = var.namespace
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
@@ -37,7 +36,6 @@ resource "kubernetes_cluster_role_binding" "iwo-all-binding" {
     kind      = "ServiceAccount"
     name      = "iwo-user"
     namespace = var.namespace
-    #api_group = "rbac.authorization.k8s.io"
   }
 }
 
@@ -62,7 +60,7 @@ resource "kubernetes_config_map" "iwo-config" {
         "nodeRoles": ["master"]
       },
       "targetConfig": {
-        "targetName":"${var.app_name}-cluster"
+        "targetName":"${var.cluster_name}"
       },
       "daemonPodDetectors": {
         "namespaces": [],
