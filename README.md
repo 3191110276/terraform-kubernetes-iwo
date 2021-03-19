@@ -1,1 +1,1 @@
-# terraform-kubernetes-iwo
+# Module for deploying IWO on Kubernetes clusters
