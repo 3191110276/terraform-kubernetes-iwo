@@ -105,7 +105,7 @@ resource "kubernetes_deployment" "iwok8scollector" {
           name = "dockerhub.cisco.comdockerhub.cisco.com"
         }
         container {
-          image = "intersight/kubeturbo:8.0.1"
+          image = "intersight/kubeturbo:${var.collector_version}"
           name  = "iwo-k8s-collector"
           image_pull_policy = "IfNotPresent"
           args = ["--turboconfig=/etc/iwo/iwo.config", "--v=2", "--kubelet-https=true", "--kubelet-port=10250"]
