@@ -17,3 +17,9 @@ variable "iwo_server_version" {
   default     = "8.0"
   description = "Version of the IWO server. Default can be used in most cases."
 }
+
+variable "dc_version" {
+  type        = string
+  default     = "1.0.9-1
+  description = "Version of the decice connector used for establishing the Intersight tunnel. Default can be used in most cases."
+}
