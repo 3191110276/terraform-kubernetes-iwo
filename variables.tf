@@ -21,5 +21,11 @@ variable "iwo_server_version" {
 variable "dc_version" {
   type        = string
   default     = "1.0.9-1"
-  description = "Version of the decice connector used for establishing the Intersight tunnel. Default can be used in most cases."
+  description = "Version of the device connector used for establishing the Intersight tunnel. Default can be used in most cases."
+}
+
+variable "collector_version" {
+  type        = string
+  default     = "8.0.1"
+  description = "Version of the collector used for gathering data from the local Kubernetes cluster. Default can be used in most cases."
 }
