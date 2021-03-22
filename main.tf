@@ -133,7 +133,7 @@ resource "kubernetes_deployment" "iwok8scollector" {
           image = "intersight/kubeturbo:${var.collector_version}"
           name  = "iwo-k8s-collector"
           image_pull_policy = "IfNotPresent"
-          args = ["--turboconfig=/etc/iwo/iwo.config", "--v=2", "--kubelet-https=true", "--kubelet-port=10250"]
+          args = ["--turboconfig=/etc/iwo/iwo.config", "--v=2", "--kubelet-https=true", "--kubelet-port=10250", "--fail-volume-pod-moves=true"]
           volume_mount {
             name = "iwo-volume"
             mount_path = "/etc/iwo"
