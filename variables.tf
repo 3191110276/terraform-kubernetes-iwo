@@ -26,6 +26,6 @@ variable "dc_version" {
 
 variable "collector_version" {
   type        = string
-  default     = "8.0.1"
+  default     = "8.0.6"
   description = "Version of the collector used for gathering data from the local Kubernetes cluster. Default can be used in most cases."
 }
