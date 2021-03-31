@@ -14,7 +14,17 @@ terraform {
 ############################################################
 # INSTALL IWO
 ############################################################
+resource "kubernetes_namespace" "iwo" {
+  count = var.create_namespace ? 1 : 0
+  
+  metadata {
+    name = "iwo"
+  }
+}
+
 resource "kubernetes_service_account" "iwo-user" {
+  depends_on = [kubernetes_namespace.iwo]
+  
   metadata {
     name = "iwo-user"
     namespace = var.namespace
@@ -66,6 +76,8 @@ resource "kubernetes_cluster_role_binding" "iwo-all-binding" {
 
 
 resource "kubernetes_config_map" "iwo-config" {
+  depends_on = [kubernetes_namespace.iwo]
+  
   metadata {
     name = "iwo-config"
     namespace = var.namespace
