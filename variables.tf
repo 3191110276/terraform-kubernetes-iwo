@@ -4,7 +4,13 @@
 variable "namespace" {
   type        = string
   default     = "iwo"
-  description = "Namespace used for deploying the IWO objects. This namespace has to exist and is not provisioned by this module"
+  description = "Namespace used for deploying the IWO objects. This namespace has to exist and is not provisioned by this module."
+}
+
+variable "create_namespace" {
+  type        = bool
+  default     = true
+  description = "Determines if a Kubernetes namespace should be created as part of the IWO setup."
 }
 
 variable "cluster_name" {
