@@ -35,3 +35,9 @@ variable "collector_version" {
   default     = "8.0.1"
   description = "Version of the collector used for gathering data from the local Kubernetes cluster. Default can be used in most cases."
 }
+
+variable "configure_proxy" {
+  type        = bool
+  default     = false
+  description = "Should be set to true if a the connection to Intersight requires a proxy for communication."
+}
