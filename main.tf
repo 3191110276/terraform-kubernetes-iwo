@@ -158,3 +158,13 @@ resource "kubernetes_deployment" "iwok8scollector" {
     }
   }
 }
+
+
+############################################################
+# CONFIGURE PROXY ON IWO (IF REQUIRED)
+############################################################
+resource "null_resource" "iwo-proxy" {
+  provisioner "local-exec" {
+    command = "echo test"
+  }
+}
