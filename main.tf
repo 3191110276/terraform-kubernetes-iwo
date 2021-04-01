@@ -65,7 +65,7 @@ resource "kubernetes_cluster_role_binding" "iwo-all-binding" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = "iwo-cluster-admin"
+    name      = "cluster-admin" #"iwo-cluster-admin"
   }
   subject {
     kind      = "ServiceAccount"
