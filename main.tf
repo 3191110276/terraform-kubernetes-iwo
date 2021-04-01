@@ -164,6 +164,10 @@ resource "kubernetes_deployment" "iwok8scollector" {
 # CONFIGURE PROXY ON IWO (IF REQUIRED)
 ############################################################
 resource "null_resource" "iwo-proxy" {
+  depends_on = [kubernetes_deployment.iwok8scollector]
+
+  count = var.configure_proxy ? 1 : 0
+
   provisioner "local-exec" {
     command = "echo test"
   }
