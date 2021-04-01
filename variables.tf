@@ -20,7 +20,7 @@ variable "cluster_name" {
 
 variable "iwo_server_version" {
   type        = string
-  default     = "8.0"
+  default     = "8"
   description = "Version of the IWO server. Default can be used in most cases."
 }
 
