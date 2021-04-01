@@ -84,7 +84,7 @@ resource "kubernetes_config_map" "iwo-config" {
   }
 
   data = {
-    "iwo.config" = <<EOT
+    "iwo.config" = <<EOT |-
     {
       "communicationConfig": {
         "serverMeta": {
