@@ -63,8 +63,8 @@ resource "kubernetes_config_map" "iwo-config" {
     {
       "communicationConfig": {
         "serverMeta": {
-          "proxy": "http://localhost:9004"
-          "version": "${var.iwo_server_version}"
+          "proxy": "http://localhost:9004",
+          "version": "${var.iwo_server_version}",
           "turboServer": "http://topology-processor:8080"
         }
       },
@@ -72,7 +72,7 @@ resource "kubernetes_config_map" "iwo-config" {
         "nodeRoles": ["master"]
       },
       "targetConfig": {
-        "targetName":"${var.cluster_name}"
+        "targetName": "${var.cluster_name}"
       },
       "daemonPodDetectors": {
         "namespaces": [],
