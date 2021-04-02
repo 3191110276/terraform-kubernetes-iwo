@@ -187,22 +187,6 @@ resource "null_resource" "iwo-proxy" {
 ############################################################
 # GET IWO CLAIM INFORMATION
 ############################################################
-resource "null_resource" "iwo-info" {
-  depends_on = [time_sleep.wait, null_resource.iwo-proxy]
-
-  provisioner "local-exec" {
-    when = create
-
-    command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -s http://localhost:9110/DeviceIdentifiers | jq '.[].Id' > DeviceIdentifier.txt"
-  }
-
-  provisioner "local-exec" {
-    when = create
-
-    command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -s http://localhost:9110/SecurityTokens | jq '.[].Token'  > Token.txt"
-  }
-}
-
 data "external" "iwo-info" {
   depends_on = [time_sleep.wait, null_resource.iwo-proxy]
 
