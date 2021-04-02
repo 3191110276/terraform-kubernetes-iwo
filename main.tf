@@ -189,10 +189,10 @@ resource "null_resource" "iwo-claim" {
   depends_on = [time_sleep.wait, null_resource.iwo-proxy]
 
   provisioner "local-exec" {
-    command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -s http://localhost:9110/DeviceIdentifiers | jq '.[].Id'"
+    command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -s http://localhost:9110/DeviceIdentifiers | jq '.[].Id' > DeviceIdentifier.txt"
   }
 
   provisioner "local-exec" {
-    command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -s http://localhost:9110/SecurityTokens | jq '.[].Token'"
+    command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -s http://localhost:9110/SecurityTokens | jq '.[].Token'  > Token.txt"
   }
 }
