@@ -7,6 +7,10 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = ">= 2.0.2"
     }
+    intersight = {
+      source = "CiscoDevNet/intersight"
+      version = ">=1.0.4"
+    }
   }
 }
 
