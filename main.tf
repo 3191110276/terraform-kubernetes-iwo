@@ -86,15 +86,4 @@ resource "kubernetes_config_map" "iwo-config" {
 
 
 
-############################################################
-# CONFIGURE PROXY ON IWO (IF REQUIRED)
-############################################################
-resource "null_resource" "iwo-proxy" {
-  depends_on = [kubernetes_deployment.iwok8scollector]
 
-  count = var.configure_proxy ? 1 : 0
-
-  provisioner "local-exec" {
-    command = "kubectl -n iwo -c iwo-k8s-collector exec -it "$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')" -- curl -X PUT http://localhost:9110/HttpProxies -d '{"ProxyType":"Manual", "ProxyHost":"proxy-wsa.esl.cisco.com","ProxyPort":80}'"
-  }
-}
