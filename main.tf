@@ -172,7 +172,7 @@ resource "null_resource" "iwo-proxy" {
   count = var.configure_proxy ? 1 : 0
 
   provisioner "local-exec" {
-    when = apply
+    when = create
 
     command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -X PUT http://localhost:9110/HttpProxies -d '{\"ProxyType\":\"Manual\", \"ProxyHost\":\"'\"$PROXY_HOST\"'\",\"ProxyPort\":'$PROXY_PORT'}'"
 
@@ -191,13 +191,13 @@ resource "null_resource" "iwo-info" {
   depends_on = [time_sleep.wait, null_resource.iwo-proxy]
 
   provisioner "local-exec" {
-    when = apply
+    when = create
 
     command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -s http://localhost:9110/DeviceIdentifiers | jq '.[].Id' > DeviceIdentifier.txt"
   }
 
   provisioner "local-exec" {
-    when = apply
+    when = create
 
     command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -s http://localhost:9110/SecurityTokens | jq '.[].Token'  > Token.txt"
   }
@@ -211,7 +211,7 @@ resource "null_resource" "iwo-claim" {
   depends_on = [null_resource.iwo-info]
 
   provisioner "local-exec" {
-    when = apply
+    when = create
 
     command = "echo claim"
   }
