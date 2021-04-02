@@ -84,6 +84,80 @@ resource "kubernetes_config_map" "iwo-config" {
 }
 
 
+resource "kubernetes_deployment" "iwok8scollector" {
+  depends_on = [kubernetes_config_map.iwo-config]
+  metadata {
+    name = "iwok8scollector"
+    namespace = var.namespace
+  }
 
+  spec {
+    replicas = 2
+
+    selector {
+      match_labels = {
+        "app.kubernetes.io/name" = "iwok8scollector"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          "app.kubernetes.io/name" = "iwok8scollector"
+        }
+        annotations = {
+          "kubeturbo.io/controllable" = "false"
+        }
+      }
+
+      spec {
+        service_account_name = "iwo-user"
+        automount_service_account_token = "true"
+        image_pull_secrets {
+          name = "dockerhub.cisco.comdockerhub.cisco.com"
+        }
+        container {
+          image = "intersight/kubeturbo:${var.collector_version}"
+          name  = "iwo-k8s-collector"
+          image_pull_policy = "IfNotPresent"
+          args = ["--turboconfig=/etc/iwo/iwo.config", "--v=2", "--kubelet-https=true", "--kubelet-port=10250"] #, "--fail-volume-pod-moves=true"]
+          volume_mount {
+            name = "iwo-volume"
+            mount_path = "/etc/iwo"
+            read_only = "true"
+          }
+          volume_mount {
+            name = "varlog"
+            mount_path = "/var/log"
+          }
+        }
+        container {
+          image = "intersight/pasadena:${var.dc_version}"
+          name  = "iwo-k8s-dc"
+          image_pull_policy = "IfNotPresent"
+          volume_mount {
+            name = "varlog"
+            mount_path = "/cisco/pasadena/logs"
+          }
+          env {
+            name = "PROXY_PORT"
+            value = "9004"
+          }
+        }
+        volume {
+          name = "iwo-volume"
+          config_map {
+            name = "iwo-config"
+          }
+        }
+        volume {
+          name = "varlog"
+          empty_dir {}
+        }
+        restart_policy = "Always"
+      }
+    }
+  }
+}
 
 
