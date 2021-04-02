@@ -156,12 +156,18 @@ resource "kubernetes_deployment" "iwok8scollector" {
   }
 }
 
+resource "time_sleep" "wait_5_seconds" {
+  depends_on = [kubernetes_deployment.iwok8scollector]
+
+  create_duration = "5s"
+}
+
 
 ############################################################
 # CONFIGURE PROXY ON IWO (IF REQUIRED)
 ############################################################
 resource "null_resource" "iwo-proxy" {
-  depends_on = [kubernetes_deployment.iwok8scollector]
+  depends_on = [time_sleep.wait_5_seconds]
 
   count = var.configure_proxy ? 1 : 0
 
@@ -175,7 +181,7 @@ resource "null_resource" "iwo-proxy" {
 # GET IWO CLAIM INFORMATION
 ############################################################
 resource "null_resource" "iwo-claim" {
-  depends_on = [kubernetes_deployment.iwok8scollector, null_resource.iwo-proxy]
+  depends_on = [time_sleep.wait_5_seconds, null_resource.iwo-proxy]
 
   provisioner "local-exec" {
     command = "kubectl get pods -n iwo"
