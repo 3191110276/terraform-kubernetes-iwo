@@ -112,7 +112,7 @@ resource "kubernetes_deployment" "iwok8scollector" {
 
       spec {
         service_account_name = "iwo-user"
-        automount_service_account_token = "true"
+        #automount_service_account_token = "true"
         image_pull_secrets {
           name = "dockerhub.cisco.comdockerhub.cisco.com"
         }
