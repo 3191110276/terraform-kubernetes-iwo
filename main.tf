@@ -156,10 +156,10 @@ resource "kubernetes_deployment" "iwok8scollector" {
   }
 }
 
-resource "time_sleep" "wait_5_seconds" {
+resource "time_sleep" "wait" {
   depends_on = [kubernetes_deployment.iwok8scollector]
 
-  create_duration = "5s"
+  create_duration = "10s"
 }
 
 
@@ -167,7 +167,7 @@ resource "time_sleep" "wait_5_seconds" {
 # CONFIGURE PROXY ON IWO (IF REQUIRED)
 ############################################################
 resource "null_resource" "iwo-proxy" {
-  depends_on = [time_sleep.wait_5_seconds]
+  depends_on = [time_sleep.wait]
 
   count = var.configure_proxy ? 1 : 0
 
@@ -186,7 +186,7 @@ resource "null_resource" "iwo-proxy" {
 # GET IWO CLAIM INFORMATION
 ############################################################
 resource "null_resource" "iwo-claim" {
-  depends_on = [time_sleep.wait_5_seconds, null_resource.iwo-proxy]
+  depends_on = [time_sleep.wait, null_resource.iwo-proxy]
 
   provisioner "local-exec" {
     command = "kubectl -n iwo -c iwo-k8s-collector exec -it \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -s http://localhost:9110/DeviceIdentifiers | jq '.[].Id'"
