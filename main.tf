@@ -203,6 +203,14 @@ resource "null_resource" "iwo-info" {
   }
 }
 
+data "external" "iwo-info" {
+  program = ["bash", "${path.module}/get_iwo_info.sh"]
+
+  query = {
+    namespace = var.namespace
+  }
+}
+
 
 ############################################################
 # CLAIM IWO TO INTERSIGHT
