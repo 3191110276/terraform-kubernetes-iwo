@@ -166,7 +166,7 @@ resource "null_resource" "iwo-proxy" {
   count = var.configure_proxy ? 1 : 0
 
   provisioner "local-exec" {
-    command = "kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')"
+    command = "kubectl get pod -n iwo | sed -n 2p | awk '{print $1}'"
   }
 }
 
