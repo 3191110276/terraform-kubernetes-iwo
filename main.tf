@@ -112,10 +112,6 @@ resource "kubernetes_deployment" "iwok8scollector" {
 
       spec {
         service_account_name = "iwo-user"
-        #automount_service_account_token = "true"
-        #image_pull_secrets {
-        #  name = "dockerhub.cisco.comdockerhub.cisco.com"
-        #}
         container {
           image = "intersight/kubeturbo:${var.collector_version}"
           name  = "iwo-k8s-collector"
@@ -161,3 +157,31 @@ resource "kubernetes_deployment" "iwok8scollector" {
 }
 
 
+############################################################
+# CONFIGURE PROXY ON IWO (IF REQUIRED)
+############################################################
+resource "null_resource" "iwo-proxy" {
+  depends_on = [kubernetes_deployment.iwok8scollector]
+
+  count = var.configure_proxy ? 1 : 0
+
+  provisioner "local-exec" {
+    command = "kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')"
+  }
+}
+
+
+############################################################
+# GET IWO CLAIM INFORMATION
+############################################################
+resource "null_resource" "iwo-claim" {
+  depends_on = [kubernetes_deployment.iwok8scollector, null_resource.iwo-proxy]
+
+  provisioner "local-exec" {
+    command = "kubectl get pods -n iwo"
+  }
+
+  provisioner "local-exec" {
+    command = "kubectl get pods -n iwo"
+  }
+}
