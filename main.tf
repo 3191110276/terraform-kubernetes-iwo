@@ -204,6 +204,8 @@ resource "null_resource" "iwo-info" {
 }
 
 data "external" "iwo-info" {
+  depends_on = [time_sleep.wait, null_resource.iwo-proxy]
+
   program = ["bash", "${path.module}/get_iwo_info.sh"]
 
   query = {
