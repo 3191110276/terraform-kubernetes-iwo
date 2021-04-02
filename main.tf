@@ -221,7 +221,7 @@ resource "null_resource" "iwo-claim" {
 ############################################################
 # UNCLAIM IWO FROM INTERSIGHT
 ############################################################
-resource "null_resource" "iwo-claim" {
+resource "null_resource" "iwo-unclaim" {
   depends_on = [time_sleep.wait]
 
   provisioner "local-exec" {
