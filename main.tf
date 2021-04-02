@@ -113,9 +113,9 @@ resource "kubernetes_deployment" "iwok8scollector" {
       spec {
         service_account_name = "iwo-user"
         #automount_service_account_token = "true"
-        image_pull_secrets {
-          name = "dockerhub.cisco.comdockerhub.cisco.com"
-        }
+        #image_pull_secrets {
+        #  name = "dockerhub.cisco.comdockerhub.cisco.com"
+        #}
         container {
           image = "intersight/kubeturbo:${var.collector_version}"
           name  = "iwo-k8s-collector"
