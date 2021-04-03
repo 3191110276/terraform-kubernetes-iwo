@@ -196,31 +196,3 @@ data "external" "iwo-info" {
     namespace = var.namespace
   }
 }
-
-
-############################################################
-# CLAIM IWO TO INTERSIGHT
-############################################################
-resource "null_resource" "iwo-claim" {
-  depends_on = [null_resource.iwo-info]
-
-  provisioner "local-exec" {
-    when = create
-
-    command = "echo claim"
-  }
-}
-
-
-############################################################
-# UNCLAIM IWO FROM INTERSIGHT
-############################################################
-resource "null_resource" "iwo-unclaim" {
-  depends_on = [time_sleep.wait]
-
-  provisioner "local-exec" {
-    when = destroy
-
-    command = "echo unclaim"
-  }
-}
