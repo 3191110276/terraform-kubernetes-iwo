@@ -88,7 +88,7 @@ resource "kubernetes_deployment" "iwok8scollector" {
   depends_on = [kubernetes_config_map.iwo-config]
 
   timeouts {
-    create = "1800s"
+    create = "3600s"
   }
 
   metadata {
