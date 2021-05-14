@@ -87,7 +87,6 @@ resource "kubernetes_config_map" "iwo-config" {
 resource "kubernetes_deployment" "iwok8scollector" {
   depends_on = [kubernetes_config_map.iwo-config]
 
-  wait_for_completion = true
   timeouts {
     create = "900s"
   }
