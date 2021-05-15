@@ -99,6 +99,8 @@ resource "kubernetes_deployment" "iwok8scollector" {
   spec {
     replicas = 2
 
+    progress_deadline_seconds = "3600s"
+
     selector {
       match_labels = {
         "app.kubernetes.io/name" = "iwok8scollector"
