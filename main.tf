@@ -17,6 +17,10 @@ terraform {
 resource "kubernetes_namespace" "iwo" {
   count = var.create_namespace ? 1 : 0
   
+  timeouts {
+    delete = "3600s"
+  }
+  
   metadata {
     name = "iwo"
   }
