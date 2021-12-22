@@ -20,7 +20,7 @@ variable "cluster_name" {
 
 variable "iwo_server_version" {
   type        = string
-  default     = "8"
+  default     = "8.3"
   description = "Version of the IWO server. Default can be used in most cases."
 }
 
@@ -32,7 +32,7 @@ variable "dc_version" {
 
 variable "collector_version" {
   type        = string
-  default     = "8.0.6"
+  default     = "8.3.4"
   description = "Version of the collector used for gathering data from the local Kubernetes cluster. Default can be used in most cases."
 }
 
