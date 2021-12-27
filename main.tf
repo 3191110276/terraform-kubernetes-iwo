@@ -177,22 +177,22 @@ resource "time_sleep" "wait" {
 ############################################################
 # CONFIGURE PROXY ON IWO (IF REQUIRED)
 ############################################################
-#resource "null_resource" "iwo-proxy" {
-#  depends_on = [time_sleep.wait]
-#
-#  count = var.configure_proxy ? 1 : 0
-#
-#  provisioner "local-exec" {
-#    when = create
-#
-#    command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -X PUT http://localhost:9110/HttpProxies -d '{\"ProxyType\":\"Manual\", \"ProxyHost\":\"'\"$PROXY_HOST\"'\",\"ProxyPort\":'$PROXY_PORT'}'"
-#
-#    environment = {
-#      PROXY_HOST = var.proxy_host
-#      PROXY_PORT = var.proxy_port
-#    }
-#  }
-#}
+resource "null_resource" "iwo-proxy" {
+  depends_on = [time_sleep.wait]
+
+  count = var.configure_proxy ? 1 : 0
+
+  provisioner "local-exec" {
+    when = create
+
+    command = "kubectl -n iwo -c iwo-k8s-collector exec -i \"$(kubectl get pod -n iwo | sed -n 2p | awk '{print $1}')\" -- curl -X PUT http://localhost:9110/HttpProxies -d '{\"ProxyType\":\"Manual\", \"ProxyHost\":\"'\"$PROXY_HOST\"'\",\"ProxyPort\":'$PROXY_PORT'}'"
+
+    environment = {
+      PROXY_HOST = var.proxy_host
+      PROXY_PORT = var.proxy_port
+    }
+  }
+}
 
 
 ############################################################
