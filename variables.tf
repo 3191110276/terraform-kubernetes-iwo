@@ -35,21 +35,3 @@ variable "collector_version" {
   default     = "8.3.4"
   description = "Version of the collector used for gathering data from the local Kubernetes cluster. Default can be used in most cases."
 }
-
-variable "configure_proxy" {
-  type        = bool
-  default     = false
-  description = "Should be set to true if a the connection to Intersight requires a proxy for communication."
-}
-
-variable "proxy_host" {
-  type        = string
-  default     = ""
-  description = "Hostname or IP of the proxy used for establishing a connection to Intersight. Only required if the connection uses a proxy."
-}
-
-variable "proxy_port" {
-  type        = string
-  default     = "443"
-  description = "Port of the proxy used for establishing a connection to Intersight. Only required if the connection uses a proxy."
-}
